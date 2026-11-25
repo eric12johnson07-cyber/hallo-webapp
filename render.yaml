@@ -1,0 +1,21 @@
+databases:
+  - name: hallo-db
+    plan: free
+    databaseName: hallo
+    user: hallo
+
+services:
+  - type: web
+    name: hallo-eric
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: APP_NAME
+        value: Eric
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hallo-db
+          property: connectionString
